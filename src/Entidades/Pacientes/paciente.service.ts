@@ -3,7 +3,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Paciente } from './paciente.entity';
-import { Medico } from '../medico/medico.entity';
+import { Medico } from '../Medico/medico.entity';
 
 @Injectable()
 export class PacienteService {

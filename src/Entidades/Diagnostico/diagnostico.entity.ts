@@ -16,3 +16,4 @@ export class Diagnostico {
   @ManyToOne(() => Paciente, (paciente) => paciente.diagnosticos)
   paciente: Paciente;
 }
+

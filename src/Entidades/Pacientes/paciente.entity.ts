@@ -18,5 +18,5 @@ export class Paciente {
   medicos: Medico[];
 
   @OneToMany(() => Diagnostico, (diagnostico) => diagnostico.paciente)
-  diagnosticos: Diagnostico[];
+  diagnosticos: Diagnostico[]; // Asegúrate de que esta propiedad está correctamente configurada
 }
