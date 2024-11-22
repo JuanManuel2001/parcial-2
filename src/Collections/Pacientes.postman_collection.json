@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "4d72a81a-672a-43f8-a3ba-40061675c000",
+		"name": "Pacientes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23394097"
+	},
+	"item": [
+		{
+			"name": "Crear Pacientes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - id, nombre, and genero\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('id');\r",
+							"    pm.expect(responseData).to.have.property('nombre');\r",
+							"    pm.expect(responseData).to.have.property('genero');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Id is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Id should be a non-empty string\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\r\n    \"nombre\": \"Juan Diaz\",\r\n    \"genero\":\"M\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/pacientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pacientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un Paciente por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.id).to.exist;\r",
+							"  pm.expect(responseData.nombre).to.exist;\r",
+							"  pm.expect(responseData.genero).to.exist;\r",
+							"  pm.expect(responseData.medicos).to.exist;\r",
+							"  pm.expect(responseData.diagnosticos).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Id is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Id should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Medicos and diagnosticos should be arrays\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.medicos).to.be.an('array');\r",
+							"  pm.expect(responseData.diagnosticos).to.be.an('array');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/pacientes/37a38380-5d6c-4b36-8179-722029f695da",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pacientes",
+						"37a38380-5d6c-4b36-8179-722029f695da"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los Pacientes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - id, nombre, genero, medicos, diagnosticos\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+							"    \r",
+							"    responseData.forEach(function(paciente) {\r",
+							"        pm.expect(paciente.id).to.exist;\r",
+							"        pm.expect(paciente.nombre).to.exist;\r",
+							"        pm.expect(paciente.genero).to.exist;\r",
+							"        pm.expect(paciente.medicos).to.exist;\r",
+							"        pm.expect(paciente.diagnosticos).to.exist;\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/pacientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pacientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un paciente por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is within an acceptable range\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/pacientes/123e4567-e89b-12d3-a456-426614174000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pacientes",
+						"123e4567-e89b-12d3-a456-426614174000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un Medico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - id, nombre, especialidad, and telefono\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('id');\r",
+							"    pm.expect(responseData).to.have.property('nombre');\r",
+							"    pm.expect(responseData).to.have.property('especialidad');\r",
+							"    pm.expect(responseData).to.have.property('telefono');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"987e6543-e89b-12d3-a456-426614174001\",\r\n  \"nombre\": \"Dr. Juan Pérez\",\r\n  \"especialidad\": \"Cardiología\",\r\n  \"telefono\": \"555-123-457\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/medicos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"medicos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Asignar un Medico a un Paciente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/pacientes/37a38380-5d6c-4b36-8179-722029f695da/medicos/987e6543-e89b-12d3-a456-426614174001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pacientes",
+						"37a38380-5d6c-4b36-8179-722029f695da",
+						"medicos",
+						"987e6543-e89b-12d3-a456-426614174001"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Medico } from './Entidades/Medico/medico.entity'; 
-import { Paciente } from './Entidades/Pacientes/paciente.entity';
-import { Diagnostico } from './Entidades/Diagnostico/diagnostico.entity';
+import { MedicoModule } from './Entidades/Medico/medico.module'; 
+import { PacienteModule } from './Entidades/Pacientes/paciente.module';
+import { DiagnosticoModule } from './Entidades/Diagnostico/diagnostico.module';
 
 @Module({
   imports: [
@@ -14,10 +14,12 @@ import { Diagnostico } from './Entidades/Diagnostico/diagnostico.entity';
       username: 'postgres',
       password: 'Epic@280701',
       database: 'postgres',
-      entities: [Medico, Paciente, Diagnostico], // Asegúrate de que las entidades están todas aquí
+      autoLoadEntities: true,
       synchronize: true, 
     }),
-    TypeOrmModule.forFeature([Medico, Paciente, Diagnostico]), // Asegúrate de que las entidades se cargan en el módulo
+    MedicoModule,
+    PacienteModule,
+    DiagnosticoModule
   ],
 })
 export class AppModule {}
